@@ -4,7 +4,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0658bfdd-6635-410f-b335-25ac6f927e75" name="更改" comment="" />
+    <list default="true" id="0658bfdd-6635-410f-b335-25ac6f927e75" name="更改" comment="">
+      <change afterPath="$PROJECT_DIR$/rpc-core/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/atguigu/cloud/model/RpcRequest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/atguigu/cloud/model/RpcResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/atguigu/cloud/proxy/ServiceProxy.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/atguigu/cloud/proxy/ServiceProxyFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/atguigu/cloud/registry/LocalRegistry.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/atguigu/cloud/serializer/JdkSerializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/atguigu/cloud/serializer/Serializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/atguigu/cloud/server/HttpServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/atguigu/cloud/server/HttpServerHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-core/src/main/java/com/atguigu/cloud/server/VertxHttpServer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-core/target/classes/com/atguigu/cloud/server/HttpServer.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-core/target/classes/com/atguigu/cloud/server/VertxHttpServer.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-core/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rpc-core/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rpcDemo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/rpcDemo.iml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,6 +37,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -30,6 +52,9 @@
   &quot;associatedIndex&quot;: 6
 }</component>
   <component name="ProjectId" id="2rODtbJqAItO8OI6qjiUXLntWex" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -46,14 +71,15 @@
     "Maven.rpc-easy [install].executor": "Run",
     "Maven.rpc-easy [package].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "E:/javaTestDemo/rpcDemo",
+    "last_opened_file_path": "E:/javaTestDemo/rpcDemo/rpc-core",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "SDKs",
+    "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.30574712",
     "settings.editor.selected.configurable": "reference.projectsettings.compiler.javacompiler",
@@ -62,6 +88,11 @@
     "应用程序.EasyProviderExample.executor": "Run"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\javaTestDemo\rpcDemo" />
+    </key>
+  </component>
   <component name="RunManager" selected="Application.EasyConsumerExample">
     <configuration name="EasyConsumerExample" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.atguigu.cloud.EasyConsumerExample" />
@@ -111,12 +142,25 @@
       <workItem from="1736430725556" duration="10867000" />
       <workItem from="1736943445539" duration="1255000" />
       <workItem from="1740294513889" duration="39000" />
-      <workItem from="1742909358368" duration="559000" />
+      <workItem from="1742909358368" duration="1271000" />
+      <workItem from="1743038023495" duration="37000" />
+      <workItem from="1743055873141" duration="1540000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
