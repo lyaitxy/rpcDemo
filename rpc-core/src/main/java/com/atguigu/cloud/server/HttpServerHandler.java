@@ -1,10 +1,12 @@
 package com.atguigu.cloud.server;
 
+import com.atguigu.cloud.RpcApplication;
 import com.atguigu.cloud.model.RpcResponse;
 import com.atguigu.cloud.model.RpcRequest;
 import com.atguigu.cloud.registry.LocalRegistry;
 import com.atguigu.cloud.serializer.JdkSerializer;
 import com.atguigu.cloud.serializer.Serializer;
+import com.atguigu.cloud.serializer.SerializerFactory;
 import io.vertx.core.Handler;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerRequest;
@@ -23,7 +25,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest>{
     @Override
     public void handle(HttpServerRequest request) {
         // 指定序列化器
-        final Serializer serializer = new JdkSerializer();
+        final Serializer serializer = SerializerFactory.getInstance(RpcApplication.getRpcConfig().getSerializer());
         // 记录日志
         System.out.println("Received request: " + request.method() + " " + request.uri());
         // 异步处理 HTTP 请求
@@ -38,14 +40,14 @@ public class HttpServerHandler implements Handler<HttpServerRequest>{
             // 构造响应结果对象
             RpcResponse rpcResponse = new RpcResponse();
             // 如果请求为null， 直接返回
-            if(rpcResponse != null) {
+            if(rpcRequest == null) {
                 rpcResponse.setMessage("rpcRequest is null");
                 doResponse(request, rpcResponse, serializer);
                 return;
             }
             try {
                 // 获取要调用的服务实现类，通过反射调用
-                Class<?> implClass = LocalRegistry.get(rpcRequest.getMethodName());
+                Class<?> implClass = LocalRegistry.get(rpcRequest.getServiceName());
                 Method method = implClass.getMethod(rpcRequest.getMethodName(), rpcRequest.getParameterTypes());
                 Object result = method.invoke(implClass.newInstance(), rpcRequest.getArgs());
                 // 封装返回结果
