@@ -1,0 +1,3 @@
+hessian=com.atguigu.cloud.serializer.HessianSerializer
+json=com.atguigu.cloud.serializer.JsonSerializer
+kryo=com.atguigu.cloud.serializer.KryoSerializer
