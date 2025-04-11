@@ -8,6 +8,7 @@ import com.atguigu.cloud.spi.SpiLoader;
 public class RegistryFactory {
 
     static {
+        // 传入注册的类名，使用反射拿到对应的全类名，从而到对应的配置文件去加载配置
         SpiLoader.load(Registry.class);
     }
 

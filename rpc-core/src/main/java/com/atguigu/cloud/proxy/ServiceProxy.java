@@ -58,7 +58,7 @@ public class ServiceProxy implements InvocationHandler {
             if (CollUtil.isEmpty(serviceMetaInfoList)) {
                 throw new RuntimeException("暂无服务地址");
             }
-            // 暂时先取第一个
+            // 暂时先取第一个，这里只是按照前缀进行查询，没有用到服务地址和端口
             ServiceMetaInfo selectedServiceMetaInfo = serviceMetaInfoList.get(0);
             // 发送请求，带上自己要获取的服务和参数
             // TODO 这里地址被硬编码（需要使用注册中心和服务发现机制解决）

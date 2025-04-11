@@ -20,7 +20,7 @@ public class ConfigUtils {
     }
 
     /**
-     * 加载配置对象，支持区分环境
+     * 加载配置对象，支持区分环境，目标文件在类路径下，如果没有配置文件，使用默认配置
      *
      * @param tClass
      * @param prefix

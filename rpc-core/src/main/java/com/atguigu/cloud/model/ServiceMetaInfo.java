@@ -35,7 +35,7 @@ public class ServiceMetaInfo {
     private Integer servicePort;
 
     /**
-     * 获取服务键名
+     * 获取服务键名，组成为 服务名称:服务版本号
      * @return
      */
     public String getServiceKey() {
@@ -45,7 +45,7 @@ public class ServiceMetaInfo {
     }
 
     /**
-     * 获取服务注册节点键名
+     * 获取服务注册节点键名，组成为 服务名称:服务版本号/服务地址
      * @return
      */
     public String getServiceNodeKey() {
@@ -53,13 +53,13 @@ public class ServiceMetaInfo {
     }
 
     /**
-     * 获取完整服务地址
+     * 获取完整服务地址, 组成为 调用的服务地址:调用的服务端口
      * @return
      */
     public String getServiceAddress() {
-        if (!StrUtil.contains(serviceHost, "http")) {
-            return String.format("http://%s:%s", serviceHost, servicePort);
-        }
+//        if (!StrUtil.contains(serviceHost, "http")) {
+//            return String.format("http://%s:%s", serviceHost, servicePort);
+//        }
         return String.format("%s:%s", serviceHost, servicePort);
     }
 }
