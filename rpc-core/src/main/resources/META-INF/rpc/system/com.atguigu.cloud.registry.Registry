@@ -1,1 +1,2 @@
 etcd=com.atguigu.cloud.registry.EtcdRegistry
+zookeeper=com.atguigu.cloud.registry.ZooKeeperRegistry
