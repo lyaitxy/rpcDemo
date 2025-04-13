@@ -5,6 +5,8 @@ import cn.hutool.core.util.IdUtil;
 import com.atguigu.cloud.RpcApplication;
 import com.atguigu.cloud.config.RpcConfig;
 import com.atguigu.cloud.constant.RpcConstant;
+import com.atguigu.cloud.loadbalancer.LoadBalancer;
+import com.atguigu.cloud.loadbalancer.LoadBalancerFactory;
 import com.atguigu.cloud.model.RpcRequest;
 import com.atguigu.cloud.model.RpcResponse;
 import com.atguigu.cloud.model.ServiceMetaInfo;
@@ -18,10 +20,12 @@ import io.vertx.core.Vertx;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.net.NetClient;
 import io.vertx.core.net.NetSocket;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -30,6 +34,7 @@ import java.util.concurrent.CompletableFuture;
  * @Author: LiYang
  * @Date: 2025/1/10 13:32
  */
+@Slf4j
 public class ServiceProxy implements InvocationHandler {
     /**
     * @Description 调用代理
@@ -63,8 +68,13 @@ public class ServiceProxy implements InvocationHandler {
             if (CollUtil.isEmpty(serviceMetaInfoList)) {
                 throw new RuntimeException("暂无服务地址");
             }
-            // 暂时先取第一个，这里只是按照前缀进行查询，没有用到服务地址和端口
-            ServiceMetaInfo selectedServiceMetaInfo = serviceMetaInfoList.get(0);
+            // 负载均衡
+            LoadBalancer loadBalancer = LoadBalancerFactory.getInstance(rpcConfig.getLoadBalancer());
+            // 将调用方法名（请求路径）作为负载均衡器参数
+            HashMap<String, Object> requestParams = new HashMap<>();
+            requestParams.put("methodName", rpcRequest.getMethodName());
+            ServiceMetaInfo selectedServiceMetaInfo = loadBalancer.select(requestParams, serviceMetaInfoList);
+            log.info("selectedServiceMetaInfo, {}", selectedServiceMetaInfo);
             // 发送 TCP 请求
             RpcResponse rpcResponse = VertxTcpClient.doRequest(rpcRequest, selectedServiceMetaInfo);
             return rpcResponse.getData();

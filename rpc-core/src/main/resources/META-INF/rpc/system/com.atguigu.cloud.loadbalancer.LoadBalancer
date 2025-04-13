@@ -1,0 +1,3 @@
+roundRobin=com.atguigu.cloud.loadbalancer.RoundRobinLoadBalancer
+random=com.atguigu.cloud.loadbalancer.RandomLoadBalancer
+consistentHash=com.atguigu.cloud.loadbalancer.ConsistentHashLoadBalancer
