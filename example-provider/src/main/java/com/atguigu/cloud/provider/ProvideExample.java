@@ -7,7 +7,7 @@ import com.atguigu.cloud.model.ServiceMetaInfo;
 import com.atguigu.cloud.registry.LocalRegistry;
 import com.atguigu.cloud.registry.Registry;
 import com.atguigu.cloud.registry.RegistryFactory;
-import com.atguigu.cloud.server.VertxHttpServer;
+import com.atguigu.cloud.server.tcp.VertxTcpServer;
 import com.atguigu.cloud.service.UserService;
 
 /**
@@ -38,8 +38,12 @@ public class ProvideExample {
         }
 
         // 启动web服务
-        VertxHttpServer httpServer = new VertxHttpServer();
-        httpServer.doStart(RpcApplication.getRpcConfig().getServerPort());
+        // VertxHttpServer httpServer = new VertxHttpServer();
+        // httpServer.doStart(RpcApplication.getRpcConfig().getServerPort());
+
+        // 启动 TCP 服务
+        VertxTcpServer vertxTcpServer = new VertxTcpServer();
+        vertxTcpServer.doStart(RpcApplication.getRpcConfig().getServerPort());
     }
 
 }
