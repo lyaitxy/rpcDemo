@@ -1,5 +1,6 @@
 package com.atguigu.cloud.config;
 
+import com.atguigu.cloud.fault.retry.RetryStrategyKeys;
 import com.atguigu.cloud.loadbalancer.LoadBalancerKeys;
 import com.atguigu.cloud.serializer.SerializerKeys;
 import lombok.Data;
@@ -41,4 +42,8 @@ public class RpcConfig {
      * 负载均衡器
      */
     private String loadBalancer = LoadBalancerKeys.CONSISTENT_HASH;
+    /**
+     * 重试策略
+     */
+    private String retryStrategy = RetryStrategyKeys.NO;
 }

@@ -1,0 +1,2 @@
+no=com.atguigu.cloud.fault.retry.NoRetryStrategy
+fixedInterval=com.atguigu.cloud.fault.retry.FixedIntervalRetryStrategy

@@ -5,6 +5,8 @@ import cn.hutool.core.util.IdUtil;
 import com.atguigu.cloud.RpcApplication;
 import com.atguigu.cloud.config.RpcConfig;
 import com.atguigu.cloud.constant.RpcConstant;
+import com.atguigu.cloud.fault.retry.RetryStrategy;
+import com.atguigu.cloud.fault.retry.RetryStrategyFactory;
 import com.atguigu.cloud.loadbalancer.LoadBalancer;
 import com.atguigu.cloud.loadbalancer.LoadBalancerFactory;
 import com.atguigu.cloud.model.RpcRequest;
@@ -75,8 +77,11 @@ public class ServiceProxy implements InvocationHandler {
             requestParams.put("methodName", rpcRequest.getMethodName());
             ServiceMetaInfo selectedServiceMetaInfo = loadBalancer.select(requestParams, serviceMetaInfoList);
             log.info("selectedServiceMetaInfo, {}", selectedServiceMetaInfo);
-            // 发送 TCP 请求
-            RpcResponse rpcResponse = VertxTcpClient.doRequest(rpcRequest, selectedServiceMetaInfo);
+            // 发送 TCP 请求,使用重试机制
+            RetryStrategy retryStrategy = RetryStrategyFactory.getInstance(rpcConfig.getRetryStrategy());
+            RpcResponse rpcResponse = retryStrategy.doRetry(() ->
+                VertxTcpClient.doRequest(rpcRequest, selectedServiceMetaInfo)
+            );
             return rpcResponse.getData();
             /*
             // 发送请求，带上自己要获取的服务和参数
