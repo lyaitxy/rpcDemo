@@ -1,0 +1,4 @@
+failBack=com.atguigu.cloud.fault.tolerant.FailBackTolerantStrategy
+failFast=com.atguigu.cloud.fault.tolerant.FailFastTolerantStrategy
+failOver=com.atguigu.cloud.fault.tolerant.FailOverTolerantStrategy
+failSafe=com.atguigu.cloud.fault.tolerant.FailSafeTolerantStrategy

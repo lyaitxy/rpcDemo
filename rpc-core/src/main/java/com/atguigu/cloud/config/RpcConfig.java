@@ -1,6 +1,7 @@
 package com.atguigu.cloud.config;
 
 import com.atguigu.cloud.fault.retry.RetryStrategyKeys;
+import com.atguigu.cloud.fault.tolerant.TolerantStrategyKeys;
 import com.atguigu.cloud.loadbalancer.LoadBalancerKeys;
 import com.atguigu.cloud.serializer.SerializerKeys;
 import lombok.Data;
@@ -46,4 +47,8 @@ public class RpcConfig {
      * 重试策略
      */
     private String retryStrategy = RetryStrategyKeys.NO;
+    /**
+     * 容错策略
+     */
+    private String tolerantStrategy = TolerantStrategyKeys.FAIL_FAST;
 }
