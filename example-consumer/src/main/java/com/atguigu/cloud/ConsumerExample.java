@@ -1,5 +1,6 @@
 package com.atguigu.cloud;
 
+import com.atguigu.cloud.bootstrap.ConsumerBootstrap;
 import com.atguigu.cloud.model.User;
 import com.atguigu.cloud.proxy.ServiceProxyFactory;
 import com.atguigu.cloud.service.UserService;
@@ -9,6 +10,9 @@ import com.atguigu.cloud.service.UserService;
  */
 public class ConsumerExample {
     public static void main(String[] args) {
+
+        // 服务提供者初始化
+        ConsumerBootstrap.init();
 
         // 获取代理
         UserService userService = ServiceProxyFactory.getProxy(UserService.class);
@@ -23,7 +27,5 @@ public class ConsumerExample {
                 System.out.println("user == null");
             }
         }
-        short number = userService.getNumber();
-        System.out.println(number);
     }
 }
