@@ -7,7 +7,7 @@ import io.vertx.core.buffer.Buffer;
 import java.io.IOException;
 
 /**
- * 协议消息编码器
+ * 协议消息编码器，拼接到buffer中，一次性发送
  */
 public class ProtocolMessageEncoder {
     /**

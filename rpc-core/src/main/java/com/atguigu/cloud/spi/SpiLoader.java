@@ -7,26 +7,25 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * SPI 加载器（支持键值对映射）
+ * 相比与原生的serviceLoader，实现了按照key去获取对应的实现类，并且是按需加载，不是一次性全部加载，
+ * 对扩展分为用户级和系统级，并且用户级要高于系统级
  */
 @Slf4j
 public class SpiLoader {
     /**
      * 存储已加载的类：接口名 => (key => 实现类)
      */
-    private static Map<String, Map<String, Class<?>>> loadMap = new ConcurrentHashMap<>();
+    private final static Map<String, Map<String, Class<?>>> loadMap = new ConcurrentHashMap<>();
 
     /**
      * 对象实例缓存（避免重复 new），类路径 => 对象实例，单例模式
      */
-    private static Map<String, Object> instanceCache = new ConcurrentHashMap<>();
+    private final static Map<String, Object> instanceCache = new ConcurrentHashMap<>();
 
     /**
      * 系统 SPI 目录

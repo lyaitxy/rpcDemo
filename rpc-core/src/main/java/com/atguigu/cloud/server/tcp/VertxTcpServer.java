@@ -14,9 +14,9 @@ public class VertxTcpServer implements HttpServer {
 
     @Override
     public void doStart(int port) {
-        // 创建 Vert.x 实例
+        // 创建 Vert.x 实例，内部维护时间循环线程池
         Vertx vertx = Vertx.vertx();
-        // 创建 TCP 服务器
+        // 创建 TCP 服务器，基于NIO的TCP服务端对象
         NetServer server = vertx.createNetServer();
         // 处理请求
         server.connectHandler(new TcpServerHandler());

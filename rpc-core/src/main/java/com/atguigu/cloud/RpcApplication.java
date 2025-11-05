@@ -25,6 +25,7 @@ public class RpcApplication {
         RegistryConfig registryConfig = rpcConfig.getRegistryConfig();
         // 这里加载了注册中心工厂，就会执行工厂中的静态代码块，加载类路径配置文件下的配置
         Registry registry = RegistryFactory.getInstance(registryConfig.getRegistry());
+        // init方法会初始化好client，kvClient，（以etcd为例）
         registry.init(registryConfig);
         log.info("registry init, config = {}", registryConfig);
 

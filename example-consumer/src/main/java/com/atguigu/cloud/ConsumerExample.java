@@ -20,7 +20,10 @@ public class ConsumerExample {
         user.setName("llll");
         // 调用
         for(int i = 0; i < 3; i++) {
+            long before = System.currentTimeMillis();
             User newUser = userService.getUser(user);
+            long after = System.currentTimeMillis();
+            System.out.printf("花费多少毫秒: %d\n", after - before);
             if(newUser != null) {
                 System.out.println(newUser.getName());
             } else {

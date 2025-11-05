@@ -28,4 +28,6 @@ public class RpcRequest implements Serializable {
     private Class<?>[] parameterTypes;
     // 参数列表
     private Object[] args;
+    // 请求id
+    private long requestId;
 }

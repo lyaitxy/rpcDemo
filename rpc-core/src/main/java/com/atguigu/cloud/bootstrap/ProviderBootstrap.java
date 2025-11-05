@@ -25,6 +25,7 @@ public class ProviderBootstrap {
         RpcApplication.init();
         // 全局配置
         final RpcConfig rpcConfig = RpcApplication.getRpcConfig();
+        // 注册服务
         for(ServiceRegisterInfo<?> serviceRegisterInfo : serviceRegisterInfoList) {
             String serviceName = serviceRegisterInfo.getServiceName();
             // 本地服务

@@ -15,6 +15,7 @@ import java.lang.annotation.Target;
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
+// 第一个类是ImportBeanDefinitionRegistrar的实现类，会被当作Bean来进行加载，自定义要注册哪些Bean
 @Import({RpcInitBootstrap.class, RpcServiceScanner.class, RpcConsumerBootstrap.class})
 public @interface EnableRpc {
 

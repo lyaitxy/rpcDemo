@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import lombok.Data;
 
 /**
- * 服务元信息
+ * 服务元信息，包含服务名称，服务地址，调用的服务地址和调用的服务端口
  */
 @Data
 public class ServiceMetaInfo {
@@ -35,7 +35,7 @@ public class ServiceMetaInfo {
     private Integer servicePort;
 
     /**
-     * 获取服务键名，组成为 服务名称:服务版本号
+     * 获取服务键名，组成为 服务名称:服务版本号, serviceName:serviceVersion
      * @return
      */
     public String getServiceKey() {

@@ -31,6 +31,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -41,7 +42,7 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 public class ServiceProxy implements InvocationHandler {
     /**
-    * @Description 调用代理
+    * @Description 调用代理的方法时，就会调用这个处理器
     * @params [proxy, method, args]
     * @return java.lang.Object
     */
@@ -50,6 +51,8 @@ public class ServiceProxy implements InvocationHandler {
         // 指定序列化器
         final Serializer serializer = SerializerFactory.getInstance(RpcApplication.getRpcConfig().getSerializer());
 
+        // 获取全局请求id
+        long requestId = IdUtil.getSnowflakeNextId();
         // 构造请求
         String serviceName = method.getDeclaringClass().getName();
         RpcRequest rpcRequest = RpcRequest.builder()
@@ -57,23 +60,28 @@ public class ServiceProxy implements InvocationHandler {
                 .methodName(method.getName())
                 .parameterTypes(method.getParameterTypes())
                 .args(args)
+                .requestId(requestId)
                 .build();
 
-        // 从注册中心获取服务提供者请求地址
+        // 获取单例的全局rpc配置
         RpcConfig rpcConfig = RpcApplication.getRpcConfig();
+        // 获取到注册中心
         Registry registry = RegistryFactory.getInstance(rpcConfig.getRegistryConfig().getRegistry());
+        // 构建服务元信息
         ServiceMetaInfo serviceMetaInfo = new ServiceMetaInfo();
         serviceMetaInfo.setServiceName(serviceName);
         serviceMetaInfo.setServiceVersion(RpcConstant.DEFAULT_SERVICE_VERSION);
+        // 获取到注册中心的已经注册的服务元信息
         List<ServiceMetaInfo> serviceMetaInfoList = registry.serviceDiscovery(serviceMetaInfo.getServiceKey());
         if (CollUtil.isEmpty(serviceMetaInfoList)) {
             throw new RuntimeException("暂无服务地址");
         }
         // 负载均衡
         LoadBalancer loadBalancer = LoadBalancerFactory.getInstance(rpcConfig.getLoadBalancer());
-        // 将调用方法名（请求路径）作为负载均衡器参数
+        // 将调用方法名（请求路径）作为负载均衡器参数q
         HashMap<String, Object> requestParams = new HashMap<>();
         requestParams.put("methodName", rpcRequest.getMethodName());
+        // 从服务列表中选择一个
         ServiceMetaInfo selectedServiceMetaInfo = loadBalancer.select(requestParams, serviceMetaInfoList);
         log.info("selectedServiceMetaInfo, {}", selectedServiceMetaInfo);
         RpcResponse rpcResponse;
@@ -84,9 +92,18 @@ public class ServiceProxy implements InvocationHandler {
                 VertxTcpClient.doRequest(rpcRequest, selectedServiceMetaInfo)
             );
         } catch (Exception e) {
+
+            // 故障转移，构建上下文
+            Map<String, Object> context = new HashMap<>();
+            context.put("serviceMetaInfoList", serviceMetaInfoList);
+            context .put("failedService", selectedServiceMetaInfo);
+            context.put("rpcRequest", rpcRequest);
+            context.put("loadBalancer", loadBalancer);
+            context.put("requestParams", requestParams);
+
             // 使用容错机制
             TolerantStrategy tolerantStrategy = TolerantStrategyFactory.getInstance(rpcConfig.getTolerantStrategy());
-            rpcResponse = tolerantStrategy.doTolerant(null, e);
+            rpcResponse = tolerantStrategy.doTolerant(context, e);
         }
         return rpcResponse.getData();
         /*

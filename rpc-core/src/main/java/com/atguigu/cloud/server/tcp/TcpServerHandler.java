@@ -17,7 +17,7 @@ import java.lang.reflect.Method;
 public class TcpServerHandler implements Handler<NetSocket> {
     @Override
     public void handle(NetSocket netSocket) {
-
+        // 这个构造器中的参数是业务handler，包装一层是使用了装饰器模式，都实现了Handler接口
         TcpBufferHandleWrapper bufferHandleWrapper = new TcpBufferHandleWrapper(buffer -> {
             // 接受请求，解码
             ProtocolMessage<RpcRequest> protocolMessage;
@@ -50,12 +50,14 @@ public class TcpServerHandler implements Handler<NetSocket> {
             ProtocolMessage<RpcResponse> responseProtocolMessage = new ProtocolMessage<>(header, rpcResponse);
             try {
                 Buffer encode = ProtocolMessageEncoder.encode(responseProtocolMessage);
+                // 向连接到服务器的客户端发送数据
                 netSocket.write(encode);
             } catch (IOException e) {
                 throw new RuntimeException("协议消息编码错误");
             }
         });
-        // 处理连接
+        // 处理连接，这里表示注册一个接受数据的回调函数，当客户端发来数据时，bufferHandleWrapper的handler方法被调用，经过recordParser解析半包和粘包，得到buffer参数
         netSocket.handler(bufferHandleWrapper);
+        // 本来可以直接这样写的 netSocket.handler(buffer -> {})
     }
 }
